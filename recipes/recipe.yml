@@ -17,11 +17,11 @@ modules:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
-  type: rpm-ostree
-  repos:
-    - https://negativo17.org/repos/fedora-multimedia.repo
-  keys:
-    - https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
+  - type: rpm-ostree
+    repos:
+      - https://negativo17.org/repos/fedora-multimedia.repo
+    keys:
+      - https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
 
   - type: akmods
     base: bazzite # if not specified, classic "main" base is used by default
