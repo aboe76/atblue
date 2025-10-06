@@ -20,8 +20,7 @@ modules:
   - type: akmods
     base: bazzite # if not specified, classic "main" base is used by default
     install:
-      - common
-      #- extra
+      - evdi
 
   #- type: default-flatpaks
   #  configurations:
