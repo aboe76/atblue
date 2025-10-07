@@ -23,10 +23,10 @@ modules:
     keys:
       - https://negativo17.org/repos/RPM-GPG-KEY-slaanesh
 
-  - type: akmods
-    base: bazzite # if not specified, classic "main" base is used by default
-    install:
-      - openrazer
+  #- type: akmods
+  #  base: bazzite # if not specified, classic "main" base is used by default
+  #  install:
+  #    - openrazer
 
   #- type: default-flatpaks
   #  configurations:
