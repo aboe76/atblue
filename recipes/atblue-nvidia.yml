@@ -30,7 +30,7 @@ modules:
     install:
       - https://negativo17.org/repos/multimedia/fedora-42/x86_64/akmod-evdi-1.14.11-1.fc42.x86_64.rpm
       - https://negativo17.org/repos/multimedia/fedora-42/x86_64/displaylink-6.2.0-1.fc42.x86_64.rpm
-      - https://negativo17.org/repos/multimedia/fedora-42/x86_64/kmod-evdi-1.14.11-1.fc42.x86_64.rpm
+      #- https://negativo17.org/repos/multimedia/fedora-42/x86_64/kmod-evdi-1.14.11-1.fc42.x86_64.rpm
       - https://negativo17.org/repos/multimedia/fedora-42/x86_64/dkms-evdi-1.14.11-2.fc42.noarch.rpm
       - https://negativo17.org/repos/multimedia/fedora-42/x86_64/libevdi-1.14.11-1.fc42.x86_64.rpm
 
