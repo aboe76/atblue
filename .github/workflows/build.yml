@@ -32,13 +32,147 @@ jobs:
           #- recipe.yml
     steps:
       # the build is fully handled by the reusable github action
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Install skopeo for image checking
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y skopeo
+
+      - name: Check for last digest
+        id: check_image
+        if: github.event_name == 'schedule'
+        run: |
+          # Get the base image from the recipe
+          BASE_IMAGE=$(grep -E "^base-image:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')
+
+          # Add the image-version
+          BASE_IMAGE="${BASE_IMAGE}:$(grep -E "^image-version:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')"
+          echo "Base image: $BASE_IMAGE"
+
+          # Get the last successful build's digest from GitHub API
+          echo "Checking last successful build..."
+          LAST_DIGEST=""
+
+          # Get the last successful workflow run for this recipe
+          LAST_JOB=$(curl -s -H "Authorization: Bearer ${{ github.token }}" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs?status=success&event=schedule&per_page=1" | \
+            jq -r '.workflow_runs[0].jobs_url // empty')
+
+          if [ -z "$LAST_JOB" ]; then
+            echo "No previous successful runs found."
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          else
+            echo "Last successful job URL: $LAST_JOB"
+          fi
+
+          LAST_RUN=$(curl -s -H "Authorization: Bearer ${{ github.token }}" \
+            "$LAST_JOB" | jq -r '.jobs[] | select(.name | test("${{ matrix.recipe }}")) | .url' | head -n 1)
+
+          if [ -n "$LAST_RUN" ]; then
+            echo "Found last successful run: $LAST_RUN"
+
+            # Get the logs from the last run to extract the digest
+            LOGS_URL=$(curl -L -s -H "Authorization: Bearer ${{ github.token }}" \
+              "$LAST_RUN/logs")
+
+            # Try to extract the digest from logs
+            LAST_DIGEST=$(echo "$LOGS_URL" | grep -o "Current digest: sha256:[a-f0-9]\{64\}" | head -1 | cut -d' ' -f3 || echo "")
+          fi
+
+          # Get current digest of base image
+          CURRENT_DIGEST=$(skopeo inspect docker://$BASE_IMAGE | jq -r '.Digest')
+
+          echo "Last digest: ${LAST_DIGEST:-'none found'}"
+          echo "Current digest: $CURRENT_DIGEST"
+
+          # Compare digests
+          if [ "$CURRENT_DIGEST" != "$LAST_DIGEST" ] || [ -z "$LAST_DIGEST" ]; then
+            echo "Image has changed or no previous digest found - building"
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          else
+            echo "Image unchanged - skipping build"
+            echo "should_build=false" >> $GITHUB_OUTPUT
+          fi
+
+          echo "current_digest=$CURRENT_DIGEST" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build EVDI module
+        if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
+        run: |
+          # Get the base image from the recipe
+          BASE_IMAGE=$(grep -E "^base-image:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')
+          echo "Base image: $BASE_IMAGE"
+
+          # Add the image-version
+          BASE_IMAGE="${BASE_IMAGE}:$(grep -E "^image-version:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')"
+          echo "Base image: $BASE_IMAGE"
+
+          # Make script executable
+          chmod +x scripts/build-evdi-docker.sh
+
+          # Run the build
+          ./scripts/build-evdi-docker.sh "$BASE_IMAGE"
+
+      - name: Place the EVDI signing key
+        if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
+        run: echo "${{ secrets.EVDI_SIGNING_KEY_PEM }}" > files/keys/evdi-signing-key.pem
       - name: Build Custom Image
+        if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
         uses: blue-build/github-action@v1.9
         with:
           recipe: ${{ matrix.recipe }}
           cosign_private_key: ${{ secrets.SIGNING_SECRET }}
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
-
+          skip_checkout: true # we want to place the signing key so we will clone the repo ourselves
+          use_cache: true # use the cache to speed up builds
           # enabled by default, disable if your image is small and you want faster builds
           maximize_build_space: true
+
+      - name: Create stable tag
+        if: github.ref == 'refs/heads/main' && steps.check_image.outputs.should_build == 'true'
+        run: |
+          # Get the built image name from the recipe
+          IMAGE_NAME=$(grep -E "^name:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')
+          IMAGE_REGISTRY="ghcr.io/${{ github.repository_owner }}"
+
+          # Blue-build uses date-based tags for builds
+          DATE_TAG=$(date +%Y%m%d)
+
+          # Create the source and target image references
+          SOURCE_IMAGE="${IMAGE_REGISTRY}/${IMAGE_NAME}:${DATE_TAG}"
+          TARGET_IMAGE="${IMAGE_REGISTRY}/${IMAGE_NAME}:stable"
+
+          echo "📋 Image details:"
+          echo "  Recipe: ${{ matrix.recipe }}"
+          echo "  Image Name: ${IMAGE_NAME}"
+          echo "  Source: ${SOURCE_IMAGE}"
+          echo "  Target: ${TARGET_IMAGE}"
+
+          # Configure skopeo authentication
+          echo "🔐 Configuring registry authentication"
+          skopeo login ghcr.io -u ${{ github.actor }} -p ${{ github.token }}
+
+          # Use skopeo to copy the image with all signatures and metadata
+          echo "📦 Copying ${SOURCE_IMAGE} to ${TARGET_IMAGE} with signatures"
+          skopeo copy --all "docker://${SOURCE_IMAGE}" "docker://${TARGET_IMAGE}"
+
+          echo "✅ Successfully copied ${SOURCE_IMAGE} to ${TARGET_IMAGE} with all signatures"
+
+      # the build is fully handled by the reusable github action
+      #- name: Build Custom Image
+      #  uses: blue-build/github-action@v1.9
+      #  with:
+      #    recipe: ${{ matrix.recipe }}
+      #    cosign_private_key: ${{ secrets.SIGNING_SECRET }}
+      #    registry_token: ${{ github.token }}
+      #    pr_event_number: ${{ github.event.number }}
+
+      #    # enabled by default, disable if your image is small and you want faster builds
+      #    maximize_build_space: true
