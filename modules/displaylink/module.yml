@@ -8,7 +8,7 @@ type: script
 
 # Default configuration
 defaultOptions:
-  rpm_package: "/tmp/rpms/displaylink-1.14.10-1.x86_64.rpm"
+  rpm_package: "/tmp/rpms/displaylink-1.14.9-1.x86_64.rpm"
   signing_keys_dir: "/tmp/keys"
   evdi_git_repo: "https://github.com/DisplayLink/evdi.git"
   cleanup_build_deps: true

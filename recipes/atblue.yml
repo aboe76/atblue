@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
-name: atblue-laptop
+name: atblue
 # description will be included in the image's metadata
 description: This is my personal OS image.
 
@@ -15,18 +15,12 @@ image-version: latest-42.20251012 # latest is also supported if you want new upd
 modules:
   - type: files
     files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
       - source: keys
         destination: /tmp/keys
       - source: rpms
         destination: /tmp/rpms
       - source: prebuilt-modules
-        destination: /tmp/prebuild-modules
-
-  - type: bling
-    install:
-      - negativo17
+        destination: /tmp/prebuilt-modules
 
   - type: displaylink
     source: local

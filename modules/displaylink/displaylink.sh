@@ -46,19 +46,19 @@ PREBUILT_MODULE="/tmp/prebuilt-modules/evdi-${KERNEL_VERSION}.ko"
 
 if [ -f "$PREBUILT_MODULE" ]; then
     echo "Using pre-built EVDI module for kernel $KERNEL_VERSION"
-    
+
     # Create module directory if it doesn't exist
     MODULE_DIR="/lib/modules/${KERNEL_VERSION}/extra"
     mkdir -p "$MODULE_DIR"
-    
+
     # Copy the pre-built module
     cp "$PREBUILT_MODULE" "$MODULE_DIR/evdi.ko"
-    
+
     # Update module dependencies for the target kernel
     depmod -a "$KERNEL_VERSION"
-    
+
     echo "Pre-built EVDI module installed successfully"
-    
+ 
 else
     echo "No pre-built module found for kernel $KERNEL_VERSION, building from source..."
 
@@ -66,7 +66,7 @@ else
     echo "Installing build dependencies..."
     dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil
 
-    
+
     # Build evdi module from source
     cd /tmp
     git clone "$EVDI_GIT_REPO"
@@ -78,7 +78,7 @@ else
 
     # Install the module
     make install
-    
+ 
     echo "EVDI module built and installed from source"
 fi
 
