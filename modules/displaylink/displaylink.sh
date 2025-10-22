@@ -15,7 +15,8 @@ CLEANUP_BUILD_DEPS=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.cleanup_build_
 KERNEL_VERSION=$(ls /lib/modules/ | grep -E ".*.fc[0-9]+" | head -1 || true)
 if [ -z "$KERNEL_VERSION" ]; then
     echo "WARNING: Could not find kernel version, falling back to uname -r"
-    KERNEL_VERSION=$(uname -r)
+    KERNEL_VERSION=$(rpm -q kernel-devel --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' | head -1)
+    #KERNEL_VERSION=$(uname -r)
 fi
 
 if [ -z "$KERNEL_VERSION" ]; then
