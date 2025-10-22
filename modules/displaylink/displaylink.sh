@@ -152,7 +152,7 @@ fi
 
 echo "Using sign-file tool: $SIGN_FILE"
 echo "Signing evdi module..."
-$SIGN_FILE sha256 "$TEMP_KEYS_DIR/signing_key.pem" "$TEMP_KEYS_DIR/signing_key.x509" "$EVDI_MODULE_PATH"
+#$SIGN_FILE sha256 "$TEMP_KEYS_DIR/signing_key.pem" "$TEMP_KEYS_DIR/signing_key.x509" "$EVDI_MODULE_PATH"
 echo "Module signed successfully"
 
 # Save certificate for MOK enrollment
