@@ -12,8 +12,7 @@ EVDI_GIT_REPO=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.evdi_git_repo // "h
 CLEANUP_BUILD_DEPS=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.cleanup_build_deps // true')
 
 # Get the actual kernel version from the target system, not the build environment
-#KERNEL_VERSION=$(ls /lib/modules/ | grep -E ".*.fc[0-9]+" | head -1 || true)
-KERNEL_VERSION=$(rpm -q kernel-devel --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' | head -1)
+KERNEL_VERSION=$(ls /lib/modules/ | grep -E ".*.fc[0-9]+" | head -1 || true)
 if [ -z "$KERNEL_VERSION" ]; then
     echo "WARNING: Could not find kernel version, falling back to uname -r"
     KERNEL_VERSION=$(uname -r)
@@ -47,27 +46,27 @@ PREBUILT_MODULE="/tmp/prebuilt-modules/evdi-${KERNEL_VERSION}.ko"
 
 if [ -f "$PREBUILT_MODULE" ]; then
     echo "Using pre-built EVDI module for kernel $KERNEL_VERSION"
-
+    
     # Create module directory if it doesn't exist
     MODULE_DIR="/lib/modules/${KERNEL_VERSION}/extra"
     mkdir -p "$MODULE_DIR"
-
+    
     # Copy the pre-built module
     cp "$PREBUILT_MODULE" "$MODULE_DIR/evdi.ko"
-
+    
     # Update module dependencies for the target kernel
     depmod -a "$KERNEL_VERSION"
-
+    
     echo "Pre-built EVDI module installed successfully"
- 
+    
 else
     echo "No pre-built module found for kernel $KERNEL_VERSION, building from source..."
 
     # Install required tools
     echo "Installing build dependencies..."
-    dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil 
+    dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil
 
-
+    
     # Build evdi module from source
     cd /tmp
     git clone "$EVDI_GIT_REPO"
@@ -79,7 +78,7 @@ else
 
     # Install the module
     make install
- 
+    
     echo "EVDI module built and installed from source"
 fi
 
@@ -152,7 +151,7 @@ fi
 
 echo "Using sign-file tool: $SIGN_FILE"
 echo "Signing evdi module..."
-#$SIGN_FILE sha256 "$TEMP_KEYS_DIR/signing_key.pem" "$TEMP_KEYS_DIR/signing_key.x509" "$EVDI_MODULE_PATH"
+$SIGN_FILE sha256 "$TEMP_KEYS_DIR/signing_key.pem" "$TEMP_KEYS_DIR/signing_key.x509" "$EVDI_MODULE_PATH"
 echo "Module signed successfully"
 
 # Save certificate for MOK enrollment
