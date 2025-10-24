@@ -65,7 +65,7 @@ else
 
     # Install required tools
     echo "Installing build dependencies..."
-    dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil
+    dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil dkms unxz
 
     
     # Build evdi module from source
@@ -82,89 +82,6 @@ else
     
     echo "EVDI module built and installed from source"
 fi
-
-# Handle module signing
-echo "Setting up module signing..."
-TEMP_KEYS_DIR="/tmp/module_signing_keys"
-mkdir -p "$TEMP_KEYS_DIR"
-
-# Copy public certificate from repository
-if [ -f "$SIGNING_KEYS_DIR/evdi-signing-key.x509" ]; then
-    echo "Using public certificate from repository"
-    cp "$SIGNING_KEYS_DIR/evdi-signing-key.x509" "$TEMP_KEYS_DIR/signing_key.x509"
-else
-    echo "ERROR: Public certificate not found at $SIGNING_KEYS_DIR/evdi-signing-key.x509"
-    exit 1
-fi
-
-# Check if private key is available (from GitHub Secret or local file)
-if [ -f "$SIGNING_KEYS_DIR/evdi-signing-key.pem" ]; then
-    echo "Using private key from local file"
-    cp "$SIGNING_KEYS_DIR/evdi-signing-key.pem" "$TEMP_KEYS_DIR/signing_key.pem"
-else
-    echo "ERROR: Private signing key not found"
-    echo "Expected: $SIGNING_KEYS_DIR/evdi-signing-key.pem or EVDI_SIGNING_KEY_PEM environment variable"
-    echo "Available files in $SIGNING_KEYS_DIR:"
-    ls -la "$SIGNING_KEYS_DIR/" 2>/dev/null || echo "Directory not found"
-    exit 1
-fi
-
-# Verify keys are accessible
-if [ ! -f "$TEMP_KEYS_DIR/signing_key.pem" ] || [ ! -f "$TEMP_KEYS_DIR/signing_key.x509" ]; then
-    echo "ERROR: Failed to copy signing keys"
-    ls -la "$TEMP_KEYS_DIR/"
-    exit 1
-fi
-
-echo "Signing keys loaded successfully"
-
-# Find and sign the module
-EVDI_MODULE_PATH=$(find /lib/modules/$KERNEL_VERSION -name "evdi.ko" -type f 2>/dev/null | head -1)
-
-if [ -z "$EVDI_MODULE_PATH" ]; then
-    echo "ERROR: Could not find installed evdi module"
-    echo "Searching for any evdi files:"
-    find /lib/modules/$KERNEL_VERSION -name "*evdi*" -type f 2>/dev/null || echo "No evdi files found"
-    exit 1
-fi
-
-echo "Found evdi module at: $EVDI_MODULE_PATH"
-
-# Find the sign-file tool
-SIGN_FILE=""
-if command -v sign-file >/dev/null 2>&1; then
-    SIGN_FILE="sign-file"
-elif [ -f "/usr/src/kernels/$KERNEL_VERSION/scripts/sign-file" ]; then
-    SIGN_FILE="/usr/src/kernels/$KERNEL_VERSION/scripts/sign-file"
-elif [ -f "/lib/modules/$KERNEL_VERSION/source/scripts/sign-file" ]; then
-    SIGN_FILE="/lib/modules/$KERNEL_VERSION/source/scripts/sign-file"
-elif [ -f "/lib/modules/$KERNEL_VERSION/build/scripts/sign-file" ]; then
-    SIGN_FILE="/lib/modules/$KERNEL_VERSION/build/scripts/sign-file"
-fi
-
-if [ -z "$SIGN_FILE" ]; then
-    echo "ERROR: sign-file tool not found"
-    echo "Searching for sign-file:"
-    find /usr/src/kernels/$KERNEL_VERSION -name "sign-file" -type f 2>/dev/null || echo "Not found in /usr/src/kernels/"
-    find /lib/modules/$KERNEL_VERSION -name "sign-file" -type f 2>/dev/null || echo "Not found in /lib/modules/"
-    exit 1
-fi
-
-echo "Using sign-file tool: $SIGN_FILE"
-echo "Signing evdi module..."
-$SIGN_FILE sha256 "$TEMP_KEYS_DIR/signing_key.pem" "$TEMP_KEYS_DIR/signing_key.x509" "$EVDI_MODULE_PATH"
-echo "Module signed successfully"
-
-# Save certificate for MOK enrollment
-echo "Setting up MOK certificate..."
-mkdir -p /etc/pki/DisplayLink
-if [ -f "$SIGNING_KEYS_DIR/evdi-signing-key.der" ]; then
-    cp "$SIGNING_KEYS_DIR/evdi-signing-key.der" /etc/pki/DisplayLink/evdi-signing-key.der
-else
-    # Fallback: convert x509 to DER format
-    cp "$TEMP_KEYS_DIR/signing_key.x509" /etc/pki/DisplayLink/evdi-signing-key.der
-fi
-echo "Certificate saved to /etc/pki/DisplayLink/evdi-signing-key.der"
 
 # Clean up build artifacts
 echo "Cleaning up build artifacts..."
