@@ -13,6 +13,14 @@ image-version: stable # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  - type: dnf
+    install:
+      packages:
+        - nss-tools
+        - libappindicator-gtk3
+        - rdesktop
+        - https://download3.omnissa.com/software/CART26FQ2_LIN64_RPMPKG_2506/Omnissa-Horizon-Client-2506-8.16.0-16536624989.x64.rpm
+
   - type: files
     files:
       - source: keys
