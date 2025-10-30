@@ -23,6 +23,8 @@ modules:
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
+        - openh264
+        - mozilla-openh264
         - nss-tools
         - libappindicator-gtk3
         - freerdp
