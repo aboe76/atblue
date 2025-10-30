@@ -14,7 +14,16 @@ image-version: stable # latest is also supported if you want new updates ASAP
 # you can include multiple instances of the same module
 modules:
   - type: dnf
+    cleanup: true # clean up added repos after module is done
+    repos:
+      keys:
+      - https://download.copr.fedorainfracloud.org/results/crashdummy/Displaylink/pubkey.gpg
+      - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
+      copr:
+      - crashdummy/Displaylink
+      nonfree: negativo17
     install:
+      skip-unavailable: true # skip unavailable packages
       packages:
         - nss-tools
         - libappindicator-gtk3
