@@ -20,7 +20,6 @@ modules:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       copr:
       - crashdummy/Displaylink
-      nonfree: negativo17
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
