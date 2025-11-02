@@ -20,6 +20,8 @@ modules:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       copr:
       - crashdummy/Displaylink
+      - dsommers/openvpn3
+      - grzegorz-gutowski/openvpn3-indicator
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
@@ -28,6 +30,8 @@ modules:
         - nss-tools
         - libappindicator-gtk3
         - freerdp
+        - openvpn3-client
+        - openvpn3-indicator
         - https://download3.omnissa.com/software/CART26FQ2_LIN64_RPMPKG_2506/Omnissa-Horizon-Client-2506-8.16.0-16536624989.x64.rpm
 
   - type: files
