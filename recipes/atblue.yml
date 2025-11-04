@@ -32,7 +32,6 @@ modules:
         - freerdp
         - openvpn3-client
         - openvpn3-indicator
-        - kmod-ovpn-dco
         - https://download3.omnissa.com/software/CART26FQ2_LIN64_RPMPKG_2506/Omnissa-Horizon-Client-2506-8.16.0-16536624989.x64.rpm
 
   - type: systemd
