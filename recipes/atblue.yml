@@ -34,8 +34,20 @@ modules:
         - openvpn3-indicator
         - https://download3.omnissa.com/software/CART26FQ2_LIN64_RPMPKG_2506/Omnissa-Horizon-Client-2506-8.16.0-16536624989.x64.rpm
 
+  - type: systemd
+    system:
+      enabled:
+        - openvpn3-selinux-workaround.service
+        - openvpn3-init-config.service
+
+  - type: script
+    snippets:
+      - "setsebool -P dbus_access_tuntap_device=1"
+
   - type: files
     files:
+      - source: system
+        destination: /
       - source: keys
         destination: /tmp/keys
       - source: rpms
@@ -50,6 +62,7 @@ modules:
       signing_keys_dir: /tmp/keys
       evdi_git_repo: https://github.com/DisplayLink/evdi.git
       cleanup_build_deps: true
+
 
   #- type: default-flatpaks
   #  configurations:
