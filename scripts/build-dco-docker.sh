@@ -1,11 +1,11 @@
 #!/bin/bash
-# Usage: ./build-evdi-docker.sh <base_image>
-# Script to build EVDI module using Docker with the target Bazzite/Aurora base image
+# Usage: ./build-dco-docker.sh <base_image>
+# Script to build openvpn-dco module using Docker with the target Bazzite/Aurora base image
 # 
 # This script is designed to work in GitHub Actions by using the kernel version
 # from the container's kernel-devel package, not the host/runner's kernel.
 # 
-# Example: ./build-evdi-docker.sh ghcr.io/ublue-os/aurora-dx-nvidia-open:stable
+# Example: ./build-dco-docker.sh ghcr.io/ublue-os/aurora-dx-nvidia-open:stable
 set -euo pipefail
 
 # Check if base image is provided
@@ -15,10 +15,10 @@ if [[ $# -ne 1 ]]; then
 fi
 BASE_IMAGE="$1"
 
-echo "Building EVDI module using Docker with $BASE_IMAGE base image..."
+echo "Building dco module using Docker with $BASE_IMAGE base image..."
 
 OUTPUT_DIR="./files/prebuilt-modules"
-BUILD_SCRIPT="build-evdi-docker.sh"
+BUILD_SCRIPT="build-dco-docker.sh"
 
 # Create output directory
 mkdir -p "$OUTPUT_DIR"
