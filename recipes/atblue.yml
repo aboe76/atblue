@@ -67,7 +67,7 @@ modules:
     source: local
     options:
       dco_git_repo: https://github.com/OpenVPN/ovpn-dco.git
-      cleanup_build_depsL true
+      cleanup_build_deps: true
 
 
   #- type: default-flatpaks
