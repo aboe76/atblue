@@ -54,7 +54,7 @@ cd ovpn-dco
 
 # Build with relaxed compiler flags and specify kernel source directory
 export CFLAGS="-Wno-error=sign-compare -Wno-error=missing-field-initializers -Wno-error=discarded-qualifiers -Wno-error"
-make KERNEL_SOURCE="/usr/src/kernels/$KERNEL_VERSION" CFLAGS="$CFLAGS"
+make KERNEL_SRC="/usr/src/kernels/$KERNEL_VERSION" CFLAGS="$CFLAGS"
 
 # Copy the built module to output
 cp drivers/net/ovpn-dco/ovpn-dco-v2.ko "/output/ovpn-dco-v2-${KERNEL_VERSION}.ko"
