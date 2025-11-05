@@ -52,9 +52,11 @@ else
 
     # Install required tools
     echo "Installing build dependencies..."
-    dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil dkms unxz
+    dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil dkms unxz dwarves
 
-    
+    # fix btf
+		cp /sys/kernel/btf/vmlinux /usr/lib/modules/$KERNEL_VERSION/build/
+
     # Build evdi module from source
     cd /tmp
     git clone "$DCO_GIT_REPO"
@@ -73,7 +75,7 @@ fi
 # Clean up build artifacts
 echo "Cleaning up build artifacts..."
 cd /
-rm -rf /tmp/evdi /tmp/module_signing_keys
+rm -rf /tmp/ovpn-dco /tmp/module_signing_keys
 
 # Clean up build dependencies if requested
 if [ "$CLEANUP_BUILD_DEPS" = "true" ]; then
