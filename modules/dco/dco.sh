@@ -30,7 +30,7 @@ echo "Cleanup Build Deps: $CLEANUP_BUILD_DEPS"
 echo "Setting up DCO module..."
 
 # Check if we have a pre-built module for this kernel
-PREBUILT_MODULE="/tmp/prebuilt-modules/ovpn-dco-${KERNEL_VERSION}.ko"
+PREBUILT_MODULE="/tmp/prebuilt-modules/ovpn-dco-v2-${KERNEL_VERSION}.ko"
 
 if [ -f "$PREBUILT_MODULE" ]; then
     echo "Using pre-built DCO module for kernel $KERNEL_VERSION"
