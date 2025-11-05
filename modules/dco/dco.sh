@@ -62,10 +62,10 @@ else
 
     # Build with relaxed compiler flags for newer kernel compatibility
     export CFLAGS="-Wno-error=sign-compare -Wno-error=missing-field-initializers -Wno-error=discarded-qualifiers -Wno-error"
-    make CFLAGS="$CFLAGS"
+    make CFLAGS="$CFLAGS" KERNEL_SRC="/usr/src/kernels/$KERNEL_VERSION"
 
     # Install the module
-    make install KDIR="/usr/src/kernels/$KERNEL_VERSION" CFLAGS="$CFLAGS"
+    make install KERNEL_SRC="/usr/src/kernels/$KERNEL_VERSION" CFLAGS="$CFLAGS"
     
     echo "DCO module built and installed from source"
 fi
