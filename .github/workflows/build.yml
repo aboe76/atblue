@@ -114,9 +114,11 @@ jobs:
 
           # Make script executable
           chmod +x scripts/build-evdi-docker.sh
+          chmod +x scripts/build-dco-docker.sh
 
           # Run the build
           ./scripts/build-evdi-docker.sh "$BASE_IMAGE"
+          ./scripts/build-dco-docker.sh "$BASE_IMAGE"
 
       - name: Place the EVDI signing key
         if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
