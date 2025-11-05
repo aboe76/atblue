@@ -1,0 +1,23 @@
+name: dco
+description: Install ovpn-dco driver with secure boot signing support
+author: local
+version: 1.0.0
+
+# Module type
+type: script
+
+# Default configuration
+defaultOptions:
+  dco_git_repo: "https://github.com/OpenVPN/ovpn-dco.git"
+  cleanup_build_deps: true
+
+# Required options schema
+options:
+  dco_git_repo:
+    type: string
+    description: EVDI Git repository URL
+    required: false
+  cleanup_build_deps:
+    type: boolean
+    description: Whether to clean up build dependencies after installation
+    required: false
