@@ -63,13 +63,6 @@ modules:
       evdi_git_repo: https://github.com/DisplayLink/evdi.git
       cleanup_build_deps: true
 
-  - type: dco
-    source: local
-    options:
-      dco_git_repo: https://github.com/OpenVPN/ovpn-dco.git
-      cleanup_build_deps: true
-
-
   #- type: default-flatpaks
   #  configurations:
   #    - notify: true # Send notification after install/uninstall is finished (true/false)
