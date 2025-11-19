@@ -14,11 +14,10 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
+      nonfree: negativo17
       keys:
-      - https://download.copr.fedorainfracloud.org/results/crashdummy/Displaylink/pubkey.gpg
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       copr:
-      - crashdummy/Displaylink
       - dsommers/openvpn3
       - grzegorz-gutowski/openvpn3-indicator
     install:
@@ -31,6 +30,8 @@ modules:
         - freerdp
         - openvpn3-client
         - openvpn3-indicator
+        - https://download3.omnissa.com/software/CART26FQ2_LIN64_RPMPKG_2506/Omnissa-Horizon-Client-2506-8.16.0-16536624989.x64.rpm
+        - https://negativo17.org/repos/multimedia/fedora-43/x86_64/displaylink-6.2.0-1.fc43.x86_64.rpm
 
   - type: systemd
     system:
