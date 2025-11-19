@@ -1,0 +1,23 @@
+name: displaylinkrpm
+description: Install DisplayLink rpm
+author: local
+version: 1.0.0
+
+# Module type
+type: script
+
+# Default configuration
+defaultOptions:
+  git_repo: "https://github.com/displaylink-rpm/displaylink-rpm.git"
+  cleanup_build_deps: true
+
+# Required options schema
+options:
+  git_repo:
+    type: string
+    description: EVDI Git repository URL
+    required: false
+  cleanup_build_deps:
+    type: boolean
+    description: Whether to clean up build dependencies after installation
+    required: false

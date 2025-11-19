@@ -14,7 +14,6 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
-      nonfree: negativo17
       keys:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       copr:
@@ -31,7 +30,6 @@ modules:
         - openvpn3-client
         - openvpn3-indicator
         - https://download3.omnissa.com/software/CART26FQ2_LIN64_RPMPKG_2506/Omnissa-Horizon-Client-2506-8.16.0-16536624989.x64.rpm
-        - https://negativo17.org/repos/multimedia/fedora-43/x86_64/displaylink-6.2.0-1.fc43.x86_64.rpm
 
   - type: systemd
     system:
@@ -54,10 +52,15 @@ modules:
       - source: prebuilt-modules
         destination: /tmp/prebuilt-modules
 
+  - type: displaylinkrpm
+    source: local
+    options:
+      git_repo: https://github.com/displaylink-rpm/displaylink-rpm.git
+      cleanup_build_deps: true
+
   - type: displaylink
     source: local
     options:
-      rpm_package: /tmp/rpms/displaylink-6.2.0-1.fc43.x86_64.rpm
       signing_keys_dir: /tmp/keys
       evdi_git_repo: https://github.com/DisplayLink/evdi.git
       cleanup_build_deps: true
