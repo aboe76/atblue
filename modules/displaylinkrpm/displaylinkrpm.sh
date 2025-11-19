@@ -38,8 +38,8 @@ dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil dk
 # Build RPM module from source
 cd /tmp
 git clone "$GIT_REPO"
-cd displaylink-rpm/ci
-./fedora.sh
+cd displaylink-rpm/
+./ci/fedora.sh
 dnf5 -y install x86_64/displaylink-*.x86_64.rpm
 
 # Clean up build artifacts
