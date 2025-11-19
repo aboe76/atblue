@@ -40,7 +40,7 @@ cd /tmp
 git clone "$GIT_REPO"
 cd displaylink-rpm/
 ./ci/fedora.sh
-dnf5 -y install x86_64/displaylink-*.x86_64.rpm
+rpm -Uvh --noscripts x86_64/displaylink-*.x86_64.rpm
 
 # Clean up build artifacts
 echo "Cleaning up build artifacts..."
