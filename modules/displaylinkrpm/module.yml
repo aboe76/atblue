@@ -8,6 +8,7 @@ type: script
 
 # Default configuration
 defaultOptions:
+  rpm_package: "/tmp/rpms/displaylink-1.14.11-1.x86_64.rpm"
   git_repo: "https://github.com/displaylink-rpm/displaylink-rpm.git"
   cleanup_build_deps: true
 
