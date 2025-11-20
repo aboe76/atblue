@@ -118,6 +118,23 @@ jobs:
           # Run the build
           ./scripts/build-evdi-docker.sh "$BASE_IMAGE"
 
+      - name: Build Displaylink RPM
+        if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
+        run: |
+          # Get the base image from the recipe
+          BASE_IMAGE=$(grep -E "^base-image:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')
+          echo "Base image: $BASE_IMAGE"
+
+          # Add the image-version
+          BASE_IMAGE="${BASE_IMAGE}:$(grep -E "^image-version:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')"
+          echo "Base image: $BASE_IMAGE"
+
+          # Make script executable
+          chmod +x scripts/build-displaylinkrpm-docker.sh
+
+          # Run the build
+          ./scripts/build-displaylinkrpm-docker.sh "$BASE_IMAGE"
+
       - name: Place the EVDI signing key
         if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
         run: echo "${{ secrets.EVDI_SIGNING_KEY_PEM }}" > files/keys/evdi-signing-key.pem

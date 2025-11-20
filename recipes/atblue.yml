@@ -61,6 +61,7 @@ modules:
   - type: displaylink
     source: local
     options:
+      package_rpm: /tmp/rpms/displaylink-1.14.11-1.x86_64.rpm
       signing_keys_dir: /tmp/keys
       evdi_git_repo: https://github.com/DisplayLink/evdi.git
       cleanup_build_deps: true
