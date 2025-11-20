@@ -17,7 +17,7 @@ BASE_IMAGE="$1"
 
 echo "Building rpm using Docker with $BASE_IMAGE base image..."
 
-OUTPUT_DIR="./files/prebuilt-modules"
+OUTPUT_DIR="./files/rpms"
 BUILD_SCRIPT="build-displaylink-docker.sh"
 
 # Create output directory
