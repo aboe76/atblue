@@ -33,8 +33,10 @@ echo "Cleanup Build Deps: $CLEANUP_BUILD_DEPS"
 # Install DisplayLink userspace driver from local RPM (skip deps since we handle EVDI ourselves)
 echo "Installing DisplayLink userspace driver..."
 if [ -f "$RPM_PACKAGE" ]; then
-    rpm -Uvh --noscripts --nodeps "$RPM_PACKAGE"
-    echo "DisplayLink RPM installed successfully"
+	  if ! rpm -qa | grep -qw displaylink; then
+	    rpm -Uvh --noscripts --nodeps "$RPM_PACKAGE" && echo "DisplayLink RPM installed successfully"
+		fi
+    echo "DisplayLink RPM already installed"
 else
     echo "WARNING: DisplayLink RPM not found at $RPM_PACKAGE, skipping RPM installation"
 fi
