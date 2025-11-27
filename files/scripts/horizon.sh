@@ -5,8 +5,10 @@ rpm -Uvh --noscripts https://download3.omnissa.com/software/CART26FQ2_LIN64_RPMP
 
 mv /usr/lib/omnissa/libcrypto.so.3 /usr/lib/omnissa/libcrypto.so.3.old
 mv /usr/lib/omnissa/libssl.so.3 /usr/lib/omnissa/libssl.so.3.old
+mv /usr/lib/omnissa/libcurl.so.4 /usr/lib/omnissa/libcurl.so.4.old
 
 ln -s /usr/lib64/libcrypto.so.3 /usr/lib/omnissa/libcrypto.so.3
 ln -s /usr/lib64/libssl.so.3 /usr/lib/omnissa/libssl.so.3
+ln -s /usr/lib64/libcurl.so.4 /usr/lib/omnissa/libcurl.so.4
 
 
