@@ -67,7 +67,7 @@ else
 
     # Install required tools
     echo "Installing build dependencies..."
-    dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel mokutil dkms unxz
+    dnf5 -y reinstall kernel-devel kernel-headers git make gcc libdrm-devel mokutil dkms unxz
 
     
     # Build evdi module from source

@@ -29,7 +29,7 @@ cat > "$BUILD_SCRIPT" << 'EOF'
 set -euo pipefail
 
 # Install build dependencies
-dnf5 -y install kernel-devel kernel-headers git make gcc libdrm-devel
+dnf5 -y reinstall kernel-devel kernel-headers git make gcc libdrm-devel
 
 # Get kernel version from the installed kernel-devel package, not the running kernel
 # This ensures we use the Aurora/Bazzite kernel, not the GitHub runner's kernel

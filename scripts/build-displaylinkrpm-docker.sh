@@ -29,7 +29,7 @@ cat > "$BUILD_SCRIPT" << 'EOF'
 set -euo pipefail
 
 # Install build dependencies
-dnf5 -y install rpm-build make gcc gcc-c++ libdrm-devel systemd-rpm-macros glibc-devel wget git
+dnf5 -y reinstall rpm-build make gcc gcc-c++ libdrm-devel systemd-rpm-macros glibc-devel wget git
 
 
 # Build the RPM
