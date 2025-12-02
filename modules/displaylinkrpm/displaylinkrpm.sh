@@ -53,8 +53,15 @@ cd displaylink-rpm/
 rpm -Uvh --noscripts x86_64/displaylink-*.x86_64.rpm
 
 fi
+
+# Clean up build dependencies if requested
+if [ "$CLEANUP_BUILD_DEPS" = "true" ]; then
+    echo "Removing build dependencies..."
+    # Remove libdrm-devel as it is not needed after build
+    dnf5 -y remove kernel-devel kernel-headers libdrm-devel || echo "libdrm-devel removal failed, continuing..."
+fi
+
 # Clean up build artifacts
 echo "Cleaning up build artifacts..."
 cd /
-rm -rf /tmp/displaylink-rpm 
-
+rm -rf /tmp/displaylink-rpm

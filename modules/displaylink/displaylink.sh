@@ -49,28 +49,28 @@ PREBUILT_MODULE="/tmp/prebuilt-modules/evdi-${KERNEL_VERSION}.ko"
 
 if [ -f "$PREBUILT_MODULE" ]; then
     echo "Using pre-built EVDI module for kernel $KERNEL_VERSION"
- 
+
     # Create module directory if it doesn't exist
     MODULE_DIR="/lib/modules/${KERNEL_VERSION}/extra"
     mkdir -p "$MODULE_DIR"
- 
+
     # Copy the pre-built module
     cp "$PREBUILT_MODULE" "$MODULE_DIR/evdi.ko"
- 
+
     # Update module dependencies for the target kernel
     depmod -a "$KERNEL_VERSION"
- 
+
     echo "Pre-built EVDI module installed successfully"
- 
+
 else
     echo "No pre-built module found for kernel $KERNEL_VERSION, building from source..."
 
     # Install required tools
     echo "Installing build dependencies..."
-    dnf5 -y reinstall kernel-devel kernel-headers 
+    dnf5 -y reinstall kernel-devel kernel-headers
 		dnf5 -y install git make gcc libdrm-devel mokutil dkms unxz
 
- 
+
     # Build evdi module from source
     cd /tmp
     git clone "$EVDI_GIT_REPO"
@@ -82,7 +82,7 @@ else
 
     # Install the module
     make install KDIR="/usr/src/kernels/$KERNEL_VERSION" CFLAGS="$CFLAGS"
-    
+
     echo "EVDI module built and installed from source"
 fi
 
@@ -95,7 +95,7 @@ rm -rf /tmp/evdi /tmp/module_signing_keys
 if [ "$CLEANUP_BUILD_DEPS" = "true" ]; then
     echo "Removing build dependencies..."
     # Remove libdrm-devel as it is not needed after build
-    dnf5 -y remove libdrm-devel || echo "libdrm-devel removal failed, continuing..."
+    dnf5 -y remove kernel-devel kernel-headers libdrm-devel || echo "libdrm-devel removal failed, continuing..."
 fi
 
 # Setup module loading on boot

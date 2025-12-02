@@ -30,10 +30,6 @@ modules:
         - openvpn3-client
         - openvpn3-indicator
 
-  - type: script
-    scripts:
-      - horizon.sh
-
   - type: systemd
     system:
       enabled:
