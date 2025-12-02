@@ -67,7 +67,9 @@ else
 
     # Install required tools
     echo "Installing build dependencies..."
-    dnf5 -y reinstall kernel-devel kernel-headers
+		if ! rpm -qa | grep -qw kernel-devel; then
+	    dnf5 -y install kernel-devel kernel-headers
+		fi
 		dnf5 -y install git make gcc libdrm-devel mokutil dkms unxz
 
 
