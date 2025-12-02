@@ -41,7 +41,8 @@ echo "Setting up RPM module..."
 
 # Install required tools
 echo "Installing build dependencies..."
-dnf5 -y reinstall kernel-devel kernel-headers git make gcc libdrm-devel mokutil dkms unxz
+dnf5 -y reinstall kernel-devel kernel-headers
+dnf5 -y install git make gcc libdrm-devel mokutil dkms unxz
 
 
 # Build RPM module from source
