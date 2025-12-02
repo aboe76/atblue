@@ -58,7 +58,7 @@ modules:
   - type: displaylinkrpm
     source: local
     options:
-      rpm_package: /tmp/rpms/displaylink-1.14.11-1.x86_64.rpm
+      rpm_package: /tmp/rpms/displaylink-1.14.11-2.x86_64.rpm
       git_repo: https://github.com/displaylink-rpm/displaylink-rpm.git
       cleanup_build_deps: true
 
