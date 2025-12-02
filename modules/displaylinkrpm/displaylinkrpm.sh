@@ -12,6 +12,9 @@ CLEANUP_BUILD_DEPS=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.cleanup_build_
 
 # Get the actual kernel version from the target system, not the build environment
 #KERNEL_VERSION=$(ls /lib/modules/ | grep -E ".*.fc[0-9]+" | head -1 || true)
+if ! rpm -qa | grep -qw kernel-devel; then
+	dnf5 -y install kernel-devel kernel-headers
+fi
 KERNEL_VERSION=$(rpm -q kernel-devel --qf '%{VERSION}-%{RELEASE}.%{ARCH}\n' | head -1)
 if [ -z "$KERNEL_VERSION" ]; then
     echo "WARNING: Could not find kernel version, falling back to uname -r"
@@ -41,10 +44,7 @@ echo "Setting up RPM module..."
 
 # Install required tools
 echo "Installing build dependencies..."
-if ! rpm -qa | grep -qw kernel-devel; then
-	dnf5 -y install kernel-devel kernel-headers
-fi
-dnf5 -y install git make gcc libdrm-devel mokutil dkms unxz
+dnf5 -y install git make gcc libdrm-devel mokutil dkms unxz || echo "already installed"
 
 
 # Build RPM module from source
