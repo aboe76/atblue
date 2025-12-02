@@ -97,7 +97,6 @@ rm -rf /tmp/evdi /tmp/module_signing_keys
 if [ "$CLEANUP_BUILD_DEPS" = "true" ]; then
     echo "Removing build dependencies..."
     # Remove libdrm-devel as it is not needed after build
-	  dnf5 -y remove kernel-devel kernel-headers || echo "kernel-devel removal failed, continuing..."
     dnf5 -y remove libdrm-devel || echo "libdrm-devel removal failed, continuing..."
 fi
 
