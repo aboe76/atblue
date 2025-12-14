@@ -14,8 +14,6 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
-      files:
-        - antigravity.repo
       keys:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       copr:
@@ -31,7 +29,6 @@ modules:
         - freerdp
         - openvpn3-client
         - openvpn3-indicator
-        - antigravity
 
   - type: systemd
     system:
