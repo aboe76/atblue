@@ -14,8 +14,11 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
+      files:
+      - vivaldi.repo
       keys:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
+      - https://repo.vivaldi.com/archive/linux_signing_key.pub
       copr:
       - dsommers/openvpn3
       - grzegorz-gutowski/openvpn3-indicator
@@ -29,6 +32,7 @@ modules:
         - freerdp
         - openvpn3-client
         - openvpn3-indicator
+        - vivaldi-stable
 
   - type: systemd
     system:
