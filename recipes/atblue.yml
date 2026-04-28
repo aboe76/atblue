@@ -43,16 +43,16 @@ modules:
         - openvpn3-selinux-workaround.service
         - openvpn3-init-config.service
 
-  - type: files
-    files:
-      - source: system
-        destination: /
-      - source: keys
-        destination: /tmp/keys
-      - source: rpms
-        destination: /tmp/rpms
-      - source: prebuilt-modules
-        destination: /tmp/prebuilt-modules
+# - type: files
+#   files:
+#     - source: system
+#       destination: /
+#     - source: keys
+#       destination: /tmp/keys
+#     - source: rpms
+#       destination: /tmp/rpms
+#     - source: prebuilt-modules
+#       destination: /tmp/prebuilt-modules
 
   - type: script
     snippets:
