@@ -14,7 +14,6 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
-      nonfree: negativo17
       files:
       - vivaldi.repo
       keys:
@@ -59,8 +58,6 @@ modules:
   - type: script
     snippets:
       - "setsebool -P dbus_access_tuntap_device=1"
-    scripts:
-      - displaylink-immutable-fix.sh
 
 # - type: displaylinkrpm
 #   source: local
