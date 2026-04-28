@@ -54,7 +54,8 @@ modules:
   - type: script
     snippets:
       - "setsebool -P dbus_access_tuntap_device=1"
-      - "rpm -Uvh --noscripts /tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm"
+    scripts:
+      - displaylinkrpm.sh
 
 # - type: displaylinkrpm
 #   source: local
