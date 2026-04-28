@@ -14,6 +14,8 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
+      repos:
+        nonfree: negativo17
       files:
       - vivaldi.repo
       keys:
@@ -33,7 +35,7 @@ modules:
         - openvpn3-client
         - openvpn3-indicator
         - vivaldi-stable
-        - dkms
+        - displaylink
         - dkms-evdi
 
   - type: systemd
@@ -56,8 +58,6 @@ modules:
   - type: script
     snippets:
       - "setsebool -P dbus_access_tuntap_device=1"
-    scripts:
-      - displaylinkrpm.sh
 
 # - type: displaylinkrpm
 #   source: local
@@ -66,13 +66,13 @@ modules:
 #     git_repo: https://github.com/displaylink-rpm/displaylink-rpm.git
 #     cleanup_build_deps: true
 
-  - type: displaylink
-    source: local
-    options:
-      rpm_package: /tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm
-      signing_keys_dir: /tmp/keys
-      evdi_git_repo: https://github.com/DisplayLink/evdi.git
-      cleanup_build_deps: true
+#  - type: displaylink
+#    source: local
+#    options:
+#      rpm_package: /tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm
+#      signing_keys_dir: /tmp/keys
+#      evdi_git_repo: https://github.com/DisplayLink/evdi.git
+#      cleanup_build_deps: true
 
   #- type: default-flatpaks
   #  configurations:
