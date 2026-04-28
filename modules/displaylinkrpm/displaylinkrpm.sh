@@ -51,6 +51,7 @@ dnf5 -y install git make gcc libdrm-devel mokutil dkms unxz || echo "already ins
 cd /tmp
 git clone "$GIT_REPO"
 cd displaylink-rpm/
+echo "OSVERSION=43" >> $GITHUB_ENV
 ./ci/fedora.sh
 rpm -Uvh --noscripts x86_64/displaylink-*.x86_64.rpm
 

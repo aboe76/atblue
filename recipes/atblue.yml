@@ -25,7 +25,6 @@ modules:
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
-        - fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm
         - openh264
         - mozilla-openh264
         - nss-tools
@@ -41,10 +40,6 @@ modules:
         - openvpn3-selinux-workaround.service
         - openvpn3-init-config.service
 
-  - type: script
-    snippets:
-      - "setsebool -P dbus_access_tuntap_device=1"
-
   - type: files
     files:
       - source: system
@@ -55,6 +50,11 @@ modules:
         destination: /tmp/rpms
       - source: prebuilt-modules
         destination: /tmp/prebuilt-modules
+
+  - type: script
+    snippets:
+      - "setsebool -P dbus_access_tuntap_device=1"
+      - "rpm -Uvh --noscripts /tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm"
 
 # - type: displaylinkrpm
 #   source: local
