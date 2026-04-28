@@ -41,6 +41,10 @@ modules:
         - openvpn3-selinux-workaround.service
         - openvpn3-init-config.service
 
+  - type: rpm-ostree
+    install:
+      - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
+
 # - type: files
 #   files:
 #     - source: system
@@ -55,6 +59,8 @@ modules:
   - type: script
     snippets:
       - "setsebool -P dbus_access_tuntap_device=1"
+    scripts:
+      - displaylink-immutable-fix.sh
 
 # - type: displaylinkrpm
 #   source: local
