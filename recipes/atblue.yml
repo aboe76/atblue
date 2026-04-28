@@ -14,8 +14,7 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
-      repos:
-        nonfree: negativo17
+      nonfree: negativo17
       files:
       - vivaldi.repo
       keys:
