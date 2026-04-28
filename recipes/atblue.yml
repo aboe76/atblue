@@ -34,8 +34,6 @@ modules:
         - openvpn3-client
         - openvpn3-indicator
         - vivaldi-stable
-        - displaylink
-        - dkms-evdi
 
   - type: systemd
     system:
