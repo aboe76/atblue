@@ -40,20 +40,20 @@ modules:
         - openvpn3-selinux-workaround.service
         - openvpn3-init-config.service
 
-# - type: rpm-ostree
-#   install:
-#     - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
+  - type: rpm-ostree
+    install:
+      - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
 
-# - type: files
-#   files:
-#     - source: system
-#       destination: /
-#     - source: keys
-#       destination: /tmp/keys
-#     - source: rpms
-#       destination: /tmp/rpms
-#     - source: prebuilt-modules
-#       destination: /tmp/prebuilt-modules
+  - type: files
+    files:
+      - source: system
+        destination: /
+      - source: keys
+        destination: /tmp/keys
+      - source: rpms
+        destination: /tmp/rpms
+      - source: prebuilt-modules
+        destination: /tmp/prebuilt-modules
 
   - type: script
     snippets:
@@ -66,19 +66,22 @@ modules:
 #     git_repo: https://github.com/displaylink-rpm/displaylink-rpm.git
 #     cleanup_build_deps: true
 
-  - type: akmods
-    base: main
-    install:
-      - evdi
+  - type: displaylink
+    source: local
+    options:
+      rpm_package: /tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm
+      signing_keys_dir: /tmp/keys
+      evdi_git_repo: https://github.com/DisplayLink/evdi.git
+      cleanup_build_deps: true
 
-# - type: default-flatpaks
-#   configurations:
-#     - notify: true # Send notification after install/uninstall is finished (true/false)
-#       scope: system
-#       # If no repo information is specified, Flathub will be used by default
-#       install:  [] # system flatpaks we want all users to have and not remove
-#       #  - org.mozilla.firefox
-#       #  - org.gnome.Loupe
-#     - scope: user # Also add Flathub user repo, but no user packages
+  #- type: default-flatpaks
+  #  configurations:
+  #    - notify: true # Send notification after install/uninstall is finished (true/false)
+  #      scope: system
+  #      # If no repo information is specified, Flathub will be used by default
+  #      install:  [] # system flatpaks we want all users to have and not remove
+  #      #  - org.mozilla.firefox
+  #      #  - org.gnome.Loupe
+  #    - scope: user # Also add Flathub user repo, but no user packages
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
