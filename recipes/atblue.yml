@@ -44,16 +44,16 @@ modules:
     install:
       - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
 
-# - type: files
-#   files:
-#     - source: system
-#       destination: /
-#     - source: keys
-#       destination: /tmp/keys
-#     - source: rpms
-#       destination: /tmp/rpms
-#     - source: prebuilt-modules
-#       destination: /tmp/prebuilt-modules
+  - type: files
+    files:
+      - source: system
+        destination: /
+      - source: keys
+        destination: /tmp/keys
+      - source: rpms
+        destination: /tmp/rpms
+      - source: prebuilt-modules
+        destination: /tmp/prebuilt-modules
 
   - type: script
     snippets:
@@ -66,13 +66,13 @@ modules:
 #     git_repo: https://github.com/displaylink-rpm/displaylink-rpm.git
 #     cleanup_build_deps: true
 
-#  - type: displaylink
-#    source: local
-#    options:
-#      rpm_package: /tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm
-#      signing_keys_dir: /tmp/keys
-#      evdi_git_repo: https://github.com/DisplayLink/evdi.git
-#      cleanup_build_deps: true
+  - type: displaylink
+    source: local
+    options:
+      rpm_package: /tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm
+      signing_keys_dir: /tmp/keys
+      evdi_git_repo: https://github.com/DisplayLink/evdi.git
+      cleanup_build_deps: true
 
   #- type: default-flatpaks
   #  configurations:
