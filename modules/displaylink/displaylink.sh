@@ -6,7 +6,7 @@ set -eoux pipefail
 MODULE_CONFIG_JSON="$1"
 
 # Parse configuration options using jq
-RPM_PACKAGE=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.rpm_package // "/tmp/rpms/displaylink-1.14.11-2.x86_64.rpm"')
+RPM_PACKAGE=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.rpm_package // "/tmp/rpms/fedora-43-displaylink-1.14.15-1.github_evdi.x86_64.rpm"')
 SIGNING_KEYS_DIR=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.signing_keys_dir // "/tmp/keys"')
 EVDI_GIT_REPO=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.evdi_git_repo // "https://github.com/DisplayLink/evdi.git"')
 CLEANUP_BUILD_DEPS=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.cleanup_build_deps // true')

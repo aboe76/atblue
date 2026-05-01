@@ -12,6 +12,24 @@ image-version: stable # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  - type: files
+    files:
+      - source: system
+        destination: /
+      - source: keys
+        destination: /tmp/keys
+      - source: rpms
+        destination: /tmp/rpms
+      - source: prebuilt-modules
+        destination: /tmp/prebuilt-modules
+
+  - type: script
+    snippets:
+      - "setsebool -P dbus_access_tuntap_device=1"
+    scripts:
+      - set_fix_blurry_wayland_apps.sh
+      - set_ssh_unprivileged_ports.sh
+
   - type: dnf
     repos:
       files:
@@ -43,24 +61,6 @@ modules:
   - type: rpm-ostree
     install:
       - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
-
-  - type: files
-    files:
-      - source: system
-        destination: /
-      - source: keys
-        destination: /tmp/keys
-      - source: rpms
-        destination: /tmp/rpms
-      - source: prebuilt-modules
-        destination: /tmp/prebuilt-modules
-
-  - type: script
-    snippets:
-      - "setsebool -P dbus_access_tuntap_device=1"
-    scripts:
-      - set_fix_blurry_wayland_apps.sh
-      - set_ssh_unprivileged_ports.sh
 
 # - type: displaylinkrpm
 #   source: local
