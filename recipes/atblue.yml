@@ -14,7 +14,6 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
-      cleanup: true
       files:
       - vivaldi.repo
       keys:
