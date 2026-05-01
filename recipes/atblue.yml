@@ -20,8 +20,6 @@ modules:
         destination: /tmp/keys
       - source: rpms
         destination: /tmp/rpms
-      - source: kmods
-        destination: /tmp/rpms/kmods
       - source: prebuilt-modules
         destination: /tmp/prebuilt-modules
 
@@ -29,11 +27,6 @@ modules:
     scripts:
       - set_fix_blurry_wayland_apps.sh
       - set_ssh_unprivileged_ports.sh
-
-  - type: akmods
-    base: main
-    install:
-      - evdi
 
   - type: dnf
     repos:
