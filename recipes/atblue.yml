@@ -14,6 +14,7 @@ image-version: stable # latest is also supported if you want new updates ASAP
 modules:
   - type: dnf
     repos:
+      cleanup: true
       files:
       - vivaldi.repo
       keys:
@@ -58,6 +59,9 @@ modules:
   - type: script
     snippets:
       - "setsebool -P dbus_access_tuntap_device=1"
+    scripts:
+      - set_fix_blurry_wayland_apps.sh
+      - set_ssh_unprivileged_ports.sh
 
 # - type: displaylinkrpm
 #   source: local
