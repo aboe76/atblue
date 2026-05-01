@@ -12,11 +12,6 @@ image-version: stable # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
-  - type: akmods
-    base: main
-    install:
-      - evdi
-
   - type: files
     files:
       - source: system
@@ -32,6 +27,11 @@ modules:
     scripts:
       - set_fix_blurry_wayland_apps.sh
       - set_ssh_unprivileged_ports.sh
+
+  - type: akmods
+    base: main
+    install:
+      - evdi
 
   - type: dnf
     repos:
