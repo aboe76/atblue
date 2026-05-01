@@ -20,6 +20,8 @@ modules:
         destination: /tmp/keys
       - source: rpms
         destination: /tmp/rpms
+      - source: kmods
+        destination: /tmp/rpms/kmods
       - source: prebuilt-modules
         destination: /tmp/prebuilt-modules
 
