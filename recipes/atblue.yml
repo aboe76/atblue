@@ -12,6 +12,11 @@ image-version: stable # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  - type: akmods
+    base: main
+    install:
+      - evdi
+
   - type: files
     files:
       - source: system
@@ -56,9 +61,9 @@ modules:
         - openvpn3-selinux-workaround.service
         - openvpn3-init-config.service
 
-  - type: rpm-ostree
-    install:
-      - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
+#  - type: rpm-ostree
+#    install:
+#      - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
 
 # - type: displaylinkrpm
 #   source: local
