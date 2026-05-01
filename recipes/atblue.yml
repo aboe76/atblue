@@ -24,8 +24,6 @@ modules:
         destination: /tmp/prebuilt-modules
 
   - type: script
-    snippets:
-      - "setsebool -P dbus_access_tuntap_device=1"
     scripts:
       - set_fix_blurry_wayland_apps.sh
       - set_ssh_unprivileged_ports.sh
