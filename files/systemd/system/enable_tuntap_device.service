@@ -1,0 +1,10 @@
+[Unit]
+Description=Enable tuntap devices access selinux
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c "setsebool -P dbus_access_tuntap_device 1"
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -55,6 +55,7 @@ modules:
       enabled:
         - openvpn3-selinux-workaround.service
         - openvpn3-init-config.service
+        - enable_tuntap_device.service
 
 #  - type: rpm-ostree
 #    install:
