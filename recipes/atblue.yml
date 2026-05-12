@@ -36,6 +36,7 @@ modules:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       - https://repo.vivaldi.com/archive/linux_signing_key.pub
       copr:
+      - ojab/openvpn3
       - grzegorz-gutowski/openvpn3-indicator
     install:
       skip-unavailable: true # skip unavailable packages
