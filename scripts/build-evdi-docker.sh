@@ -28,8 +28,10 @@ cat > "$BUILD_SCRIPT" << 'EOF'
 #!/bin/bash
 set -euo pipefail
 
+KERNEL_VERSION=$(uname -r)
+
 # Install build dependencies
-dnf5 -y reinstall kernel-devel kernel-headers git make gcc
+dnf5 -y install git make gcc
 dnf5 -y install libdrm-devel
 
 # Get kernel version from the installed kernel-devel package, not the running kernel
