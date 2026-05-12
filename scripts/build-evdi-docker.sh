@@ -26,12 +26,10 @@ mkdir -p "$OUTPUT_DIR"
 # Create a temporary build script
 cat > "$BUILD_SCRIPT" << 'EOF'
 #!/bin/bash
-set -euo pipefail
 
-KERNEL_VERSION=$(uname -r)
 
 # Install build dependencies
-dnf5 -y install git make gcc
+dnf5 -y --disablerepo=updates install git make gcc kernel-devel
 dnf5 -y install libdrm-devel
 
 # Get kernel version from the installed kernel-devel package, not the running kernel
