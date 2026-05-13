@@ -36,7 +36,7 @@ modules:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       - https://repo.vivaldi.com/archive/linux_signing_key.pub
       copr:
-      - dsommers/openvpn-beta
+      - ojab/openvpn3
       - grzegorz-gutowski/openvpn3-indicator
     install:
       skip-unavailable: true # skip unavailable packages
@@ -45,7 +45,7 @@ modules:
         - mozilla-openh264
         - nss-tools
         - freerdp
-        - openvpn
+        - openvpn3-client
         - openvpn3-indicator
         - vivaldi-stable
 
