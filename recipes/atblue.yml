@@ -23,12 +23,6 @@ modules:
       - source: prebuilt-modules
         destination: /tmp/prebuilt-modules
 
-  - type: script
-    scripts:
-      - set_fix_blurry_wayland_apps.sh
-      - set_ssh_unprivileged_ports.sh
-      - clean-dnf.sh
-
   - type: dnf
     repos:
       files:
@@ -37,10 +31,8 @@ modules:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       - https://repo.vivaldi.com/archive/linux_signing_key.pub
       copr:
-        - name: ojab/openvpn3
-          chroot: fedora-44-x86_64
-        - name: grzegorz-gutowski/openvpn3-indicator
-          chroot: fedora-44-x86_64
+      - ojab/openvpn3
+      - grzegorz-gutowski/openvpn3-indicator
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
@@ -48,9 +40,13 @@ modules:
         - mozilla-openh264
         - nss-tools
         - freerdp
-        - openvpn3-client
-        - openvpn3-indicator
         - vivaldi-stable
+
+  - type: script
+    scripts:
+      - set_fix_blurry_wayland_apps.sh
+      - set_ssh_unprivileged_ports.sh
+      - install_openvpn3.sh
 
   - type: systemd
     system:
@@ -58,7 +54,6 @@ modules:
         - openvpn3-selinux-workaround.service
         - openvpn3-init-config.service
         - enable_tuntap_device.service
-
 #  - type: rpm-ostree
 #    install:
 #      - https://github.com/displaylink-rpm/displaylink-rpm/releases/download/v6.2.0/fedora-42-displaylink-1.14.15-1.github_evdi.x86_64.rpm
