@@ -30,9 +30,6 @@ modules:
       keys:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       - https://repo.vivaldi.com/archive/linux_signing_key.pub
-      copr:
-        - dsommers/openvpn3
-        - grzegorz-gutowski/openvpn3-indicator
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
@@ -41,8 +38,6 @@ modules:
         - nss-tools
         - freerdp
         - vivaldi-stable
-        - openvpn3
-        - openvpn3-indicator
 
   - type: script
     scripts:
@@ -52,8 +47,6 @@ modules:
   - type: systemd
     system:
       enabled:
-        - openvpn3-selinux-workaround.service
-        - openvpn3-init-config.service
         - enable_tuntap_device.service
 
 #  - type: rpm-ostree
