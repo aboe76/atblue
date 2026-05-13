@@ -27,6 +27,7 @@ modules:
     scripts:
       - set_fix_blurry_wayland_apps.sh
       - set_ssh_unprivileged_ports.sh
+      - clean-dnf.sh
 
   - type: dnf
     repos:
@@ -36,8 +37,10 @@ modules:
       - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       - https://repo.vivaldi.com/archive/linux_signing_key.pub
       copr:
-      - ojab/openvpn3
-      - grzegorz-gutowski/openvpn3-indicator
+        - name: ojab/openvpn3
+          chroot: fedora-44-x86_64
+        - name: grzegorz-gutowski/openvpn3-indicator
+          chroot: fedora-44-x86_64
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
