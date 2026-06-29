@@ -6,7 +6,7 @@ set -eoux pipefail
 MODULE_CONFIG_JSON="$1"
 
 # Parse configuration options using jq
-RPM_PACKAGE=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.rpm_package // "/tmp/rpms/displaylink-1.14.11-2.x86_64.rpm"')
+RPM_PACKAGE=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.rpm_package // "/tmp/rpms/fedora-44-displaylink-1.14.16-2.github_evdi.x86_64.rpm"')
 GIT_REPO=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.git_repo // "https://github.com/displaylink-rpm/displaylink-rpm.git"')
 CLEANUP_BUILD_DEPS=$(echo "$MODULE_CONFIG_JSON" | jq -r '.options.cleanup_build_deps // true')
 
