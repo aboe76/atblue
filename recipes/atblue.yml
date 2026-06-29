@@ -25,6 +25,8 @@ modules:
 
   - type: dnf
     repos:
+      copr:
+        - dsommers/openvpn3
       files:
       - https://repo.vivaldi.com/stable/vivaldi-fedora.repo
       keys:
@@ -38,6 +40,8 @@ modules:
         - nss-tools
         - freerdp
         - vivaldi-stable
+        - openvpn3-client
+        - kmod-ovpn-dco
 
   - type: script
     scripts:
@@ -48,6 +52,8 @@ modules:
     system:
       enabled:
         - enable_tuntap_device.service
+        - openvpn3-init-config.service
+        - openvpn3-selinux-workaround.service
 
 #  - type: rpm-ostree
 #    install:
