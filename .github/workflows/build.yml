@@ -101,22 +101,22 @@ jobs:
         if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
         uses: docker/setup-buildx-action@v4
 
-#      - name: Build EVDI module
-#        if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
-#        run: |
-#          # Get the base image from the recipe
-#          BASE_IMAGE=$(grep -E "^base-image:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')
-#          echo "Base image: $BASE_IMAGE"
+      - name: Build EVDI module
+        if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'
+        run: |
+          # Get the base image from the recipe
+          BASE_IMAGE=$(grep -E "^base-image:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')
+          echo "Base image: $BASE_IMAGE"
  
           # Add the image-version
-#          BASE_IMAGE="${BASE_IMAGE}:$(grep -E "^image-version:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')"
-#          echo "Base image: $BASE_IMAGE"
+          BASE_IMAGE="${BASE_IMAGE}:$(grep -E "^image-version:" recipes/${{ matrix.recipe }} | cut -d' ' -f2 | tr -d '"')"
+          echo "Base image: $BASE_IMAGE"
  
           # Make script executable
-#          chmod +x scripts/build-evdi-docker.sh
+          chmod +x scripts/build-evdi-docker.sh
  
           # Run the build
-#          ./scripts/build-evdi-docker.sh "$BASE_IMAGE"
+          ./scripts/build-evdi-docker.sh "$BASE_IMAGE"
  
 #     - name: Build Displaylink RPM
 #       if: steps.check_image.outputs.should_build == 'true' || github.event_name != 'schedule'

@@ -27,7 +27,6 @@ modules:
     repos:
       copr:
         - dsommers/openvpn3-devsnapshots
-        - crashdummy/Displaylink
       files:
       - https://repo.vivaldi.com/stable/vivaldi-fedora.repo
       keys:
@@ -43,7 +42,6 @@ modules:
         - vivaldi-stable
         - openvpn3-client
         - kmod-ovpn-dco
-        - displaylink
 
   - type: script
     scripts:
@@ -68,13 +66,13 @@ modules:
 #     git_repo: https://github.com/displaylink-rpm/displaylink-rpm.git
 #     cleanup_build_deps: true
 
-#  - type: displaylink
-#    source: local
-#    options:
-#      rpm_package: /tmp/rpms/fedora-44-displaylink-1.14.16-2.github_evdi.x86_64.rpm
-#      signing_keys_dir: /tmp/keys
-#      evdi_git_repo: https://github.com/DisplayLink/evdi.git
-#      cleanup_build_deps: true
+  - type: displaylink
+    source: local
+    options:
+      rpm_package: /tmp/rpms/fedora-44-displaylink-1.14.16-2.github_evdi.x86_64.rpm
+      signing_keys_dir: /tmp/keys
+      evdi_git_repo: https://github.com/DisplayLink/evdi.git
+      cleanup_build_deps: true
 
   #- type: default-flatpaks
   #  configurations:
