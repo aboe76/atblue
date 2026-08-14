@@ -30,7 +30,6 @@ modules:
       files:
       - https://repo.vivaldi.com/stable/vivaldi-fedora.repo
       keys:
-      - https://packages.omnissa.com/horizon/keys/OMNISSA-PACKAGING-GPG-RSA-KEY.pub
       - https://repo.vivaldi.com/archive/linux_signing_key.pub
     install:
       skip-unavailable: true # skip unavailable packages
