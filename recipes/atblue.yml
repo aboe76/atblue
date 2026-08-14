@@ -27,10 +27,6 @@ modules:
     repos:
       copr:
         - dsommers/openvpn3-devsnapshots
-      files:
-      - https://repo.vivaldi.com/stable/vivaldi-fedora.repo
-      keys:
-      - https://repo.vivaldi.com/archive/linux_signing_key.pub
     install:
       skip-unavailable: true # skip unavailable packages
       packages:
@@ -38,7 +34,6 @@ modules:
         - mozilla-openh264
         - nss-tools
         - freerdp
-        - vivaldi-stable
         - openvpn3-client
         - kmod-ovpn-dco
 
