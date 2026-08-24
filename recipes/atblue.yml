@@ -28,7 +28,7 @@ modules:
       files:
         - protonvpn-stable.repo
       keys:
-        - https://repo.protonvpn.com/fedora-44-stable/public_key.asc
+        - public_key.asc
       copr:
         - dsommers/openvpn3-devsnapshots
     install:
