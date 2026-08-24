@@ -25,10 +25,6 @@ modules:
 
   - type: dnf
     repos:
-      files:
-        - protonvpn-stable.repo
-      keys:
-        - public_key.asc
       copr:
         - dsommers/openvpn3-devsnapshots
     install:
@@ -40,8 +36,6 @@ modules:
         - freerdp
         - openvpn3-client
         - kmod-ovpn-dco
-        - proton-vpn-gnome-desktop
-        - https://proton.me/download/pass/linux/ProtonPass.rpm
 
   - type: script
     scripts:
